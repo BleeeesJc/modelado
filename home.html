@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - Mi Página Web</title>
+    <link rel="stylesheet" href="home.css" />
+  </head>
+  <body>
+    <div id="navbar"></div>
+    <section class="hero">
+      <h1>Bienvenido a Mi Página Web</h1>
+      <p>
+        Tu espacio digital donde encontrarás información, servicios y todo lo
+        que necesitas en un solo lugar.
+      </p>
+    </section>
+
+    <!-- Contenido -->
+    <section class="content">
+      <h2>Sobre Nosotros</h2>
+      <p>
+        Somos un equipo dedicado a brindar soluciones innovadoras y efectivas.
+        Nuestro objetivo es ofrecer experiencias digitales de calidad para todos
+        los usuarios. Aquí encontrarás información actualizada, herramientas
+        útiles y un servicio personalizado.
+      </p>
+    </section>
+
+    <section class="content">
+      <h2>Nuestros Servicios</h2>
+      <p>
+        Ofrecemos consultoría, desarrollo de software, diseño web y soporte
+        técnico. Adaptamos cada solución a las necesidades específicas de
+        nuestros clientes.
+      </p>
+    </section>
+    <script>
+      fetch("navbar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("navbar").innerHTML = data;
+        });
+    </script>
+  </body>
+</html>
