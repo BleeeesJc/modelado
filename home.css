@@ -1,83 +1,160 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
 
-/* Navbar */
-nav {
-  background: linear-gradient(90deg, #333, #444);
-  color: white;
-  padding: 15px 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0px 4px 6px rgba(0,0,0,0.2);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-nav .logo {
-  font-size: 1.5em;
-  font-weight: bold;
-  letter-spacing: 1px;
-  cursor: pointer;
-}
-
-nav ul {
-  list-style: none;
+* {
   margin: 0;
   padding: 0;
-  display: flex;
-  gap: 20px;
+  box-sizing: border-box;
 }
 
-nav ul li a {
-  color: white;
-  text-decoration: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  transition: 0.3s ease;
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: linear-gradient(135deg, #e3f2fd, #f1f8e9, #f8f9fc);
+  background-size: 400% 400%;
+  animation: gradientMove 12s ease infinite;
+  color: #333;
+  line-height: 1.6;
 }
 
-nav ul li a:hover {
-  background-color: #1cc88a;
-  color: #fff;
-  transform: scale(1.05);
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-/* Hero / Descripción */
 .hero {
-  background: linear-gradient(to right, #4e73df, #1cc88a);
+  background: linear-gradient(135deg, #4e73df, #1cc88a);
   color: white;
   text-align: center;
-  padding: 100px 20px;
+  padding: 120px 20px;
+  position: relative;
+  overflow: hidden;
 }
 
 .hero h1 {
-  font-size: 2.8em;
-  margin-bottom: 15px;
+  font-size: 3.2em;
+  margin-bottom: 20px;
+  font-weight: bold;
+  animation: fadeInDown 1s ease;
 }
 
 .hero p {
-  font-size: 1.2em;
-  max-width: 600px;
+  font-size: 1.3em;
+  max-width: 700px;
   margin: auto;
+  animation: fadeInUp 1.2s ease;
 }
 
-/* Secciones */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .content {
-  padding: 40px 20px;
+  padding: 60px 20px;
   text-align: center;
+  background: white;
+  margin: 30px auto;
+  border-radius: 15px;
+  max-width: 900px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
 }
 
 .content h2 {
   margin-bottom: 20px;
+  font-size: 2em;
+  color: #4e73df;
+  position: relative;
+}
+
+.content h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #4e73df, #1cc88a);
+  margin: 10px auto 0;
+  border-radius: 2px;
 }
 
 .content p {
-  max-width: 700px;
+  max-width: 750px;
   margin: auto;
-  line-height: 1.6;
+  line-height: 1.8;
+  font-size: 1.1em;
+  color: #555;
 }
 
+.content pre {
+  background: #1e1e2f;
+  color: #f8f9fc;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: left;
+  max-width: 700px;
+  margin: 20px auto;
+  overflow-x: auto;
+  font-family: "Courier New", monospace;
+  font-size: 0.95em;
+}
+
+.content ul {
+  text-align: left;
+  max-width: 750px;
+  margin: 20px auto;
+  padding-left: 25px;
+  line-height: 1.9;
+}
+.content ul li {
+  margin-bottom: 10px;
+}
+
+.algoritmos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.algoritmos-grid .card {
+  background: #fff;
+  border-radius: 15px;
+  padding: 25px 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
+}
+
+.algoritmos-grid .card:nth-child(1) {
+  border-top: 5px solid #4e73df; 
+}
+.algoritmos-grid .card:nth-child(2) {
+  border-top: 5px solid #1cc88a; 
+}

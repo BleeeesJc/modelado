@@ -1,0 +1,77 @@
+nav {
+  background: linear-gradient(90deg, #2c3e50, #34495e, #2c3e50);
+  color: white;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(6px);
+  animation: slideDown 0.6s ease;
+}
+
+nav .logo {
+  font-size: 1.6em;
+  font-weight: bold;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+nav .logo:hover {
+  color: #1cc88a;
+  transform: scale(1.05);
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 25px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  position: relative;
+  font-size: 1.05em;
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+nav ul li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 5px;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #4e73df, #1cc88a);
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+nav ul li a:hover {
+  color: #1cc88a;
+  transform: translateY(-2px);
+}
+
+nav ul li a:hover::after {
+  width: 100%;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

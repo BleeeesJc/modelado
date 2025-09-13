@@ -3,38 +3,175 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home - Mi Página Web</title>
+    <title>Generación de Números Aleatorios - Métodos Congruenciales</title>
     <link rel="stylesheet" href="home.css" />
+    <style>
+      /* Grid para organizar las secciones */
+      .section-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+    </style>
   </head>
   <body>
     <div id="navbar"></div>
+
+    <!-- Hero -->
     <section class="hero">
-      <h1>Bienvenido a Mi Página Web</h1>
+      <h1>Generación de Números Aleatorios</h1>
       <p>
-        Tu espacio digital donde encontrarás información, servicios y todo lo
-        que necesitas en un solo lugar.
+        En simulación y modelado estocástico, los números aleatorios son
+        fundamentales. Aunque se les llama "aleatorios", en la práctica se
+        generan números <strong>pseudoaleatorios</strong>, que cumplen
+        propiedades estadísticas similares a los verdaderamente aleatorios.
       </p>
     </section>
 
-    <!-- Contenido -->
-    <section class="content">
-      <h2>Sobre Nosotros</h2>
-      <p>
-        Somos un equipo dedicado a brindar soluciones innovadoras y efectivas.
-        Nuestro objetivo es ofrecer experiencias digitales de calidad para todos
-        los usuarios. Aquí encontrarás información actualizada, herramientas
-        útiles y un servicio personalizado.
-      </p>
-    </section>
+    <!-- Grid con varias secciones en dos columnas -->
+    <div class="section-grid">
+      <section class="content">
+        <h2>Números Pseudoaleatorios</h2>
+        <p>
+          En simulación se utilizan secuencias que parecen aleatorias y siguen
+          una <strong>distribución uniforme en (0,1)</strong>. Para que un
+          generador sea útil, debe producir números independientes, rápidos de
+          calcular, reproducibles y con un periodo largo antes de repetirse.
+        </p>
+      </section>
 
-    <section class="content">
-      <h2>Nuestros Servicios</h2>
-      <p>
-        Ofrecemos consultoría, desarrollo de software, diseño web y soporte
-        técnico. Adaptamos cada solución a las necesidades específicas de
-        nuestros clientes.
-      </p>
-    </section>
+      <section class="content">
+        <h2>Métodos de Generación</h2>
+        <p>
+          A lo largo del tiempo se han usado métodos manuales, mecánicos,
+          físicos y computacionales para generar números aleatorios. Hoy en día,
+          los más comunes son los <strong>digitales</strong>, dentro de los
+          cuales destacan los <strong>métodos congruenciales</strong>.
+        </p>
+      </section>
+
+      <section class="content">
+        <h2>Métodos Congruenciales</h2>
+        <p>
+          Los métodos congruenciales producen una secuencia de enteros
+          utilizando fórmulas recursivas modulares. Estos enteros se transforman
+          luego en valores en el intervalo (0,1), que se emplean en la
+          simulación.
+        </p>
+
+        <!-- Grid con los dos algoritmos -->
+        <div class="algoritmos-grid">
+          <!-- Algoritmo Lineal -->
+          <div class="card">
+            <h3>1. Algoritmo Congruencial Lineal</h3>
+            <p>
+              Propuesto por Lehmer (1951), genera números mediante la fórmula:
+            </p>
+            <pre>X_(n+1) = (aX_n + c) mod m</pre>
+            <p>
+              Donde <em>X₀</em> es la semilla, <em>a</em> la constante
+              multiplicativa, <em>c</em> la constante aditiva y <em>m</em> el
+              módulo. Este método puede alcanzar un periodo máximo igual a
+              <em>m</em> si los parámetros cumplen ciertas condiciones. Es muy
+              usado en simulación debido a su simplicidad.
+            </p>
+          </div>
+
+          <!-- Algoritmo Multiplicativo -->
+          <div class="card">
+            <h3>2. Algoritmo Congruencial Multiplicativo</h3>
+            <p>
+              Es una simplificación del anterior, tomando <em>c = 0</em>. La
+              fórmula es:
+            </p>
+            <pre>X_(n+1) = (aX_n) mod m</pre>
+            <p>
+              Su ventaja es que requiere una operación menos. Sin embargo, para
+              obtener el máximo periodo, los parámetros también deben
+              seleccionarse con cuidado. El periodo máximo en este caso es más
+              corto que en el método lineal, pero sigue siendo útil en
+              aplicaciones prácticas.
+            </p>
+          </div>
+        </div>
+
+        <!-- Lista de propiedades -->
+        <h3>Propiedades Deseables de un Generador</h3>
+        <ul class="listado">
+          <li>
+            Debe generar números con
+            <strong>distribución uniforme en (0,1)</strong>.
+          </li>
+          <li>
+            Los valores deben ser
+            <strong>estadísticamente independientes</strong>.
+          </li>
+          <li>El <strong>periodo</strong> debe ser lo más largo posible.</li>
+          <li>
+            La generación debe ser <strong>rápida y reproducible</strong>.
+          </li>
+          <li>
+            No debe volverse degenerativo (repetir siempre el mismo número).
+          </li>
+        </ul>
+      </section>
+
+      <section class="content">
+        <h2>Ejemplos Prácticos</h2>
+        <h3>Ejemplo Lineal</h3>
+        <p>Con parámetros: X₀ = 5, a = 3, c = 7, m = 16</p>
+        <pre>
+X₁ = (3*5 + 7) mod 16 = 6
+X₂ = (3*6 + 7) mod 16 = 9
+X₃ = (3*9 + 7) mod 16 = 14
+        </pre>
+        <p>
+          Los valores pseudoaleatorios en (0,1) se obtienen dividiendo entre m.
+        </p>
+
+        <h3>Ejemplo Multiplicativo</h3>
+        <p>Con parámetros: X₀ = 17, a = 5, m = 32</p>
+        <pre>
+X₁ = (5*17) mod 32 = 21
+X₂ = (5*21) mod 32 = 9
+X₃ = (5*9)  mod 32 = 13
+        </pre>
+      </section>
+
+      <section class="content">
+        <h2>Comparación Lineal vs Multiplicativo</h2>
+        <p>
+          El método <strong>lineal</strong> es más flexible al incluir la
+          constante aditiva, lo que puede dar periodos más largos. En cambio, el
+          <strong>multiplicativo</strong> es más simple y rápido, pero con
+          limitaciones en el periodo.
+        </p>
+      </section>
+
+      <section class="content">
+        <h2>Aplicaciones</h2>
+        <p>
+          Los números pseudoaleatorios generados por estos métodos se usan en:
+        </p>
+        <ul
+          style="
+            text-align: left;
+            max-width: 700px;
+            margin: auto;
+            line-height: 1.8;
+          "
+        >
+          <li>Simulación de colas y sistemas de espera.</li>
+          <li>Modelado de fenómenos físicos y económicos.</li>
+          <li>Criptografía y seguridad informática.</li>
+          <li>Generación de datos para juegos y gráficos.</li>
+        </ul>
+      </section>
+    </div>
+
     <script>
       fetch("navbar.html")
         .then((response) => response.text())
