@@ -4,7 +4,6 @@ import math
 
 st.set_page_config(
     page_title="Simulación de Eventos Discretos",
-    page_icon="",
     layout="wide"
 )
 
@@ -356,7 +355,7 @@ elif simulacion == "🧂 Azúcar":
         col4.metric("Ganancia Neta", f"{ganancia_neta:.2f} Bs")
 
 else:
-    st.info("👆 Por favor, selecciona una simulación del menú desplegable")
+    st.info("Por favor, selecciona una simulación del menú desplegable")
 
 st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown("<hr>", unsafe_allow_html=True)
