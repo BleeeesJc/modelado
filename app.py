@@ -4,66 +4,202 @@ import math
 
 st.set_page_config(
     page_title="Simulación de Eventos Discretos",
+    page_icon="🎲",
     layout="wide"
 )
 
 st.markdown("""
 <style>
-    .main {
-        background-color: #1E3A5F;
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    
+    .stApp {
+        background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+        font-family: 'Inter', sans-serif;
     }
-    .stSelectbox {
-        color: white;
+    
+    .main > div {
+        padding-top: 2rem;
     }
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 700 !important;
+    }
+    
     h1 {
-        color: #FFFFFF;
+        background: linear-gradient(120deg, #ffffff 0%, #a8c5e2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 3.5rem !important;
         text-align: center;
+        margin-bottom: 0.5rem !important;
+        text-shadow: 0 4px 6px rgba(0,0,0,0.3);
     }
-    h2, h3 {
-        color: #A8C5E2;
+    
+    h3 {
+        color: #e0e7ff !important;
+        font-size: 1.8rem !important;
     }
-    .stButton>button {
+    
+    .gradient-line {
+        height: 4px;
+        background: linear-gradient(90deg, transparent, #4a90e2, #6ec1e4, #4a90e2, transparent);
+        border-radius: 2px;
+        margin: 1.5rem auto;
+        width: 60%;
+        box-shadow: 0 2px 10px rgba(74, 144, 226, 0.5);
+    }
+    
+    .stSelectbox label {
+        color: #e0e7ff !important;
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+    }
+    
+    .stSelectbox > div > div {
+        background: rgba(42, 74, 111, 0.6) !important;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(74, 144, 226, 0.3) !important;
+        border-radius: 12px !important;
+        color: white !important;
+    }
+    
+    .stNumberInput label {
+        color: #d4e3f0 !important;
+        font-weight: 600 !important;
+    }
+    
+    .stNumberInput > div > div > input {
+        background: rgba(42, 74, 111, 0.5) !important;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(74, 144, 226, 0.3) !important;
+        border-radius: 8px !important;
+        color: white !important;
+        font-weight: 600 !important;
+    }
+    
+    .stButton > button {
         width: 100%;
-        background-color: #4A90E2;
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
         color: white;
-        font-weight: bold;
-        border-radius: 5px;
-        padding: 10px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        border-radius: 12px;
+        padding: 0.8rem 2rem;
+        border: none;
+        box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+        transition: all 0.3s ease;
     }
-    .stButton>button:hover {
-        background-color: #357ABD;
+    
+    .stButton > button:hover {
+        background: linear-gradient(135deg, #357abd 0%, #2a5f8f 100%);
+        box-shadow: 0 6px 20px rgba(74, 144, 226, 0.6);
+        transform: translateY(-2px);
+    }
+    
+    .stDataFrame {
+        background: rgba(42, 74, 111, 0.4) !important;
+        backdrop-filter: blur(10px);
+        border-radius: 12px !important;
+        border: 2px solid rgba(74, 144, 226, 0.2) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    [data-testid="metric-container"] {
+        background: linear-gradient(135deg, rgba(42, 74, 111, 0.6) 0%, rgba(53, 122, 189, 0.4) 100%);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(74, 144, 226, 0.3);
+        border-radius: 12px;
+        padding: 1.2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    [data-testid="metric-container"] label {
+        color: #a8c5e2 !important;
+        font-weight: 600 !important;
+    }
+    
+    [data-testid="metric-container"] [data-testid="stMetricValue"] {
+        color: #ffffff !important;
+        font-size: 1.8rem !important;
+        font-weight: 700 !important;
+    }
+    
+    .stAlert {
+        background: rgba(74, 144, 226, 0.2) !important;
+        backdrop-filter: blur(10px);
+        border-left: 4px solid #4a90e2 !important;
+        border-radius: 8px !important;
+        color: #e0e7ff !important;
+    }
+    
+    hr {
+        border: none;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(74, 144, 226, 0.5), transparent);
+        margin: 2rem 0;
+    }
+    
+    .subtitle-box {
+        background: rgba(42, 74, 111, 0.4);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        padding: 1rem;
+        text-align: center;
+        border: 2px solid rgba(74, 144, 226, 0.2);
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .info-box {
+        background: rgba(42, 74, 111, 0.3);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        padding: 1.5rem;
+        border: 2px solid rgba(74, 144, 226, 0.2);
+        margin-top: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<h1>🎲 SIMULACIÓN DE EVENTOS DISCRETOS</h1>", unsafe_allow_html=True)
-st.markdown("<hr style='border: 2px solid #4A90E2;'>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center;'>Selecciona una simulación para comenzar</h3>", unsafe_allow_html=True)
-st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("<h1>SIMULACIÓN DE EVENTOS DISCRETOS</h1>", unsafe_allow_html=True)
+st.markdown("<div class='gradient-line'></div>", unsafe_allow_html=True)
+st.markdown("<div class='subtitle-box'><h4 style='color: #a8c5e2; margin: 0; font-weight: 600;'>Selecciona una simulación para comenzar</h4></div>", unsafe_allow_html=True)
 
 simulacion = st.selectbox(
     "Elige una simulación:",
     ["-- Seleccionar --", "🎲 Dados", "🛒 Tienda", "🥚 Huevos", "🧂 Azúcar"],
-    key="sim_selector"
+    disabled=False,
+    label_visibility="visible"
 )
 
 st.markdown("<br>", unsafe_allow_html=True)
 
 if simulacion == "🎲 Dados":
-    st.markdown("### 🎲 Simulación de Juego de Dados")
-    st.markdown("---")
+    st.markdown("<h3>🎲 Simulación de Juego de Dados</h3>", unsafe_allow_html=True)
+    st.markdown("<hr>", unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     
     with col1:
-        n_juegos = st.number_input("Número de Juegos:", min_value=1, value=10, step=1)
-        costo_juego = st.number_input("Costo del juego (Bs):", min_value=0.0, value=2.0, step=0.1)
-        perdida_casa = st.number_input("Pérdida de la casa si gana jugador (Bs):", min_value=0.0, value=5.0, step=0.1)
+        n_juegos = st.number_input("Número de Juegos:", min_value=1, value=10, step=1, key="nj_dados")
+        costo_juego = st.number_input("Costo del juego (Bs):", min_value=0.0, value=2.0, step=0.1, key="cj_dados")
+        perdida_casa = st.number_input("Pérdida de la casa si gana jugador (Bs):", min_value=0.0, value=5.0, step=0.1, key="pc_dados")
     
     with col2:
-        ganancia_inicial = st.number_input("Ganancia inicial de la casa (Bs):", min_value=0.0, value=0.0, step=0.1)
+        ganancia_inicial = st.number_input("Ganancia inicial de la casa (Bs):", min_value=0.0, value=0.0, step=0.1, key="gi_dados")
     
-    if st.button("▶ SIMULAR", key="btn_dados"):
+    col_btn1, col_btn2 = st.columns(2)
+    with col_btn1:
+        btn_simular_dados = st.button("▶ SIMULAR", key="btn_dados", use_container_width=True)
+    with col_btn2:
+        btn_limpiar_dados = st.button("🔄 LIMPIAR", key="btn_limpiar_dados", use_container_width=True)
+    
+    if btn_limpiar_dados:
+        st.rerun()
+    
+    if btn_simular_dados:
         ganancia_neta = ganancia_inicial
         gana_casa = 0
         gana_jugador = 0
@@ -92,8 +228,8 @@ if simulacion == "🎲 Dados":
                 "Ganancia Casa": f"{ganancia_neta:.2f}"
             })
         
-        st.markdown("###  Resultados")
-        st.dataframe(resultados, use_container_width=True)
+        st.markdown("<h3>📊 Resultados</h3>", unsafe_allow_html=True)
+        st.dataframe(resultados, use_container_width=True, height=400)
         
         porcentaje_casa = (gana_casa / n_juegos) * 100
         
@@ -102,37 +238,46 @@ if simulacion == "🎲 Dados":
         col2.metric("Juegos ganados por Casa", gana_casa)
         col3.metric("Juegos ganados por Jugador", gana_jugador)
         
-        st.info(f" Porcentaje de juegos ganados por la casa: {porcentaje_casa:.2f}%")
+        st.info(f"Porcentaje de juegos ganados por la casa: {porcentaje_casa:.2f}%")
 
 elif simulacion == "🛒 Tienda":
-    st.markdown("### 🛒 Simulación de Llegadas de Clientes")
-    st.markdown("---")
+    st.markdown("<h3>🛒 Simulación de Llegadas de Clientes</h3>", unsafe_allow_html=True)
+    st.markdown("<hr>", unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     
     with col1:
-        horas = st.number_input("Horas a simular:", min_value=1, value=10, step=1)
+        horas = st.number_input("Horas a simular:", min_value=1, value=10, step=1, key="h_tienda")
     
     with col2:
-        sims = st.number_input("Número de simulaciones:", min_value=1, value=5, step=1)
+        sims = st.number_input("Número de simulaciones:", min_value=1, value=5, step=1, key="s_tienda")
     
-    st.markdown("#### Distribución de Artículos Comprados")
+    st.markdown("<h4 style='color: #a8c5e2;'>Distribución de Artículos Comprados</h4>", unsafe_allow_html=True)
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
-        prob_0 = st.number_input("P(0 artículos):", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
+        prob_0 = st.number_input("P(0 artículos):", min_value=0.0, max_value=1.0, value=0.2, step=0.1, key="p0_tienda")
     with col2:
-        prob_1 = st.number_input("P(1 artículo):", min_value=0.0, max_value=1.0, value=0.3, step=0.1)
+        prob_1 = st.number_input("P(1 artículo):", min_value=0.0, max_value=1.0, value=0.3, step=0.1, key="p1_tienda")
     with col3:
-        prob_2 = st.number_input("P(2 artículos):", min_value=0.0, max_value=1.0, value=0.4, step=0.1)
+        prob_2 = st.number_input("P(2 artículos):", min_value=0.0, max_value=1.0, value=0.4, step=0.1, key="p2_tienda")
     with col4:
-        prob_3 = st.number_input("P(3 artículos):", min_value=0.0, max_value=1.0, value=0.1, step=0.1)
+        prob_3 = st.number_input("P(3 artículos):", min_value=0.0, max_value=1.0, value=0.1, step=0.1, key="p3_tienda")
     
-    if st.button("▶ SIMULAR", key="btn_tienda"):
+    col_btn1, col_btn2 = st.columns(2)
+    with col_btn1:
+        btn_simular_tienda = st.button("▶ SIMULAR", key="btn_tienda", use_container_width=True)
+    with col_btn2:
+        btn_limpiar_tienda = st.button("🔄 LIMPIAR", key="btn_limpiar_tienda", use_container_width=True)
+    
+    if btn_limpiar_tienda:
+        st.rerun()
+    
+    if btn_simular_tienda:
         probs = [prob_0, prob_1, prob_2, prob_3]
         
         if abs(sum(probs) - 1.0) > 0.001:
-            st.error("❌ Las probabilidades deben sumar 1.0")
+            st.error("Las probabilidades deben sumar 1.0")
         else:
             total_clientes = 0
             total_articulos = 0
@@ -161,8 +306,8 @@ elif simulacion == "🛒 Tienda":
                         "Artículos Vendidos": articulos_hora
                     })
             
-            st.markdown("###  Resultados")
-            st.dataframe(resultados, use_container_width=True, height=300)
+            st.markdown("<h3>📊 Resultados</h3>", unsafe_allow_html=True)
+            st.dataframe(resultados, use_container_width=True, height=400)
             
             prom_clientes = total_clientes / sims
             prom_articulos = total_articulos / sims
@@ -172,37 +317,46 @@ elif simulacion == "🛒 Tienda":
             col2.metric("Promedio Artículos Vendidos", f"{prom_articulos:.2f}")
 
 elif simulacion == "🥚 Huevos":
-    st.markdown("### 🥚 Simulación de Gallina Ponedora")
-    st.markdown("---")
+    st.markdown("<h3>🥚 Simulación de Gallina Ponedora</h3>", unsafe_allow_html=True)
+    st.markdown("<hr>", unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        n_sim = st.number_input("Número de Simulaciones:", min_value=1, value=5, step=1)
-        n_dias = st.number_input("Número de Días:", min_value=1, value=300, step=1)
+        n_sim = st.number_input("Número de Simulaciones:", min_value=1, value=5, step=1, key="ns_huevos")
+        n_dias = st.number_input("Número de Días:", min_value=1, value=300, step=1, key="nd_huevos")
     
     with col2:
-        precio_huevo = st.number_input("Precio Venta Huevo ($):", min_value=0.0, value=2.0, step=0.1)
-        precio_pollo = st.number_input("Precio Venta Pollo ($):", min_value=0.0, value=30.0, step=0.1)
+        precio_huevo = st.number_input("Precio Venta Huevo ($):", min_value=0.0, value=2.0, step=0.1, key="ph_huevos")
+        precio_pollo = st.number_input("Precio Venta Pollo ($):", min_value=0.0, value=30.0, step=0.1, key="pp_huevos")
     
     with col3:
-        media = st.number_input("Media (λ) huevos/día:", min_value=0.1, value=2.0, step=0.1)
+        media = st.number_input("Media (λ) huevos/día:", min_value=0.1, value=2.0, step=0.1, key="m_huevos")
     
-    st.markdown("#### Probabilidades del Sistema")
+    st.markdown("<h4 style='color: #a8c5e2;'>Probabilidades del Sistema</h4>", unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     
     with col1:
-        st.markdown("**Finalidad del Huevo**")
-        prob_roto = st.number_input("P(Roto):", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
-        prob_pollo = st.number_input("P(Pollo):", min_value=0.0, max_value=1.0, value=0.3, step=0.1)
-        prob_huevo = st.number_input("P(Permanece Huevo):", min_value=0.0, max_value=1.0, value=0.5, step=0.1)
+        st.markdown("<p style='color: #e0e7ff; font-weight: 600;'>Finalidad del Huevo</p>", unsafe_allow_html=True)
+        prob_roto = st.number_input("P(Roto):", min_value=0.0, max_value=1.0, value=0.2, step=0.1, key="pr_huevos")
+        prob_pollo = st.number_input("P(Pollo):", min_value=0.0, max_value=1.0, value=0.3, step=0.1, key="ppo_huevos")
+        prob_huevo = st.number_input("P(Permanece Huevo):", min_value=0.0, max_value=1.0, value=0.5, step=0.1, key="phu_huevos")
     
     with col2:
-        st.markdown("**Destino del Pollo**")
-        prob_muere = st.number_input("P(Muere):", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
-        prob_sobrevive = st.number_input("P(Sobrevive):", min_value=0.0, max_value=1.0, value=0.8, step=0.1)
+        st.markdown("<p style='color: #e0e7ff; font-weight: 600;'>Destino del Pollo</p>", unsafe_allow_html=True)
+        prob_muere = st.number_input("P(Muere):", min_value=0.0, max_value=1.0, value=0.2, step=0.1, key="pm_huevos")
+        prob_sobrevive = st.number_input("P(Sobrevive):", min_value=0.0, max_value=1.0, value=0.8, step=0.1, key="ps_huevos")
     
-    if st.button("▶ SIMULAR", key="btn_huevos"):
+    col_btn1, col_btn2 = st.columns(2)
+    with col_btn1:
+        btn_simular_huevos = st.button("▶ SIMULAR", key="btn_huevos", use_container_width=True)
+    with col_btn2:
+        btn_limpiar_huevos = st.button("🔄 LIMPIAR", key="btn_limpiar_huevos", use_container_width=True)
+    
+    if btn_limpiar_huevos:
+        st.rerun()
+    
+    if btn_simular_huevos:
         resultados = []
         total_ingreso = 0
         total_huevos = 0
@@ -250,8 +404,8 @@ elif simulacion == "🥚 Huevos":
             total_pollos += pollos_vivos
             total_rotos += huevos_rotos
         
-        st.markdown("###  Resultados")
-        st.dataframe(resultados, use_container_width=True)
+        st.markdown("<h3>📊 Resultados</h3>", unsafe_allow_html=True)
+        st.dataframe(resultados, use_container_width=True, height=300)
         
         ingreso_prom = total_ingreso / n_sim
         ingreso_dia = ingreso_prom / n_dias
@@ -269,30 +423,36 @@ elif simulacion == "🥚 Huevos":
         col5.metric("Promedio Huevos Vendidos", f"{prom_huevos:.2f}")
 
 elif simulacion == "🧂 Azúcar":
-    st.markdown("### 🧂 Simulación de Inventario de Azúcar")
-    st.markdown("---")
+    st.markdown("<h3>🧂 Simulación de Inventario de Azúcar</h3>", unsafe_allow_html=True)
+    st.markdown("<hr>", unsafe_allow_html=True)
     
-    col1, col2 = st.columns(2)
+    dias_sim = st.number_input("Número de días a simular:", min_value=1, value=60, step=1, key="ds_azucar")
     
-    with col1:
-        dias_sim = st.number_input("Número de días a simular:", min_value=1, value=60, step=1)
-    
-    st.markdown("#### Parámetros del Sistema")
+    st.markdown("<h4 style='color: #a8c5e2;'>Parámetros del Sistema</h4>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        capacidad_bodega = st.number_input("Capacidad de Bodega (Kg):", min_value=0.0, value=700.0, step=10.0)
-        costo_orden = st.number_input("Costo de Orden (Bs/orden):", min_value=0.0, value=100.0, step=10.0)
+        capacidad_bodega = st.number_input("Capacidad de Bodega (Kg):", min_value=0.0, value=700.0, step=10.0, key="cb_azucar")
+        costo_orden = st.number_input("Costo de Orden (Bs/orden):", min_value=0.0, value=100.0, step=10.0, key="co_azucar")
     
     with col2:
-        costo_inventario = st.number_input("Costo de Inventario (Bs/kg):", min_value=0.0, value=0.1, step=0.01)
-        costo_adquisicion = st.number_input("Costo de Adquisición (Bs/kg):", min_value=0.0, value=3.5, step=0.1)
+        costo_inventario = st.number_input("Costo de Inventario (Bs/kg):", min_value=0.0, value=0.1, step=0.01, key="ci_azucar")
+        costo_adquisicion = st.number_input("Costo de Adquisición (Bs/kg):", min_value=0.0, value=3.5, step=0.1, key="ca_azucar")
     
     with col3:
-        precio_venta = st.number_input("Precio de Venta (Bs/kg):", min_value=0.0, value=5.0, step=0.1)
-        media_demanda = st.number_input("Demanda Media (Kg/día):", min_value=0.1, value=100.0, step=1.0)
+        precio_venta = st.number_input("Precio de Venta (Bs/kg):", min_value=0.0, value=5.0, step=0.1, key="pv_azucar")
+        media_demanda = st.number_input("Demanda Media (Kg/día):", min_value=0.1, value=100.0, step=1.0, key="md_azucar")
     
-    if st.button("▶ SIMULAR", key="btn_azucar"):
+    col_btn1, col_btn2 = st.columns(2)
+    with col_btn1:
+        btn_simular_azucar = st.button("▶ SIMULAR", key="btn_azucar", use_container_width=True)
+    with col_btn2:
+        btn_limpiar_azucar = st.button("🔄 LIMPIAR", key="btn_limpiar_azucar", use_container_width=True)
+    
+    if btn_limpiar_azucar:
+        st.rerun()
+    
+    if btn_simular_azucar:
         dias_revision = 7
         inventario = capacidad_bodega
         pedido_en_curso = 0
@@ -343,8 +503,8 @@ elif simulacion == "🧂 Azúcar":
                 "Costo Acum": round(costo_total, 2)
             })
         
-        st.markdown("###  Resultados")
-        st.dataframe(resultados, use_container_width=True, height=300)
+        st.markdown("<h3>📊 Resultados</h3>", unsafe_allow_html=True)
+        st.dataframe(resultados, use_container_width=True, height=400)
         
         ganancia_neta = ingresos - costo_total
         
@@ -355,8 +515,8 @@ elif simulacion == "🧂 Azúcar":
         col4.metric("Ganancia Neta", f"{ganancia_neta:.2f} Bs")
 
 else:
-    st.info("Por favor, selecciona una simulación del menú desplegable")
+    st.markdown("<div class='info-box'><p style='color: #a8c5e2; text-align: center; margin: 0; font-size: 1.1rem;'>Por favor, selecciona una simulación del menú desplegable</p></div>", unsafe_allow_html=True)
 
 st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown("<hr>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #7B98B8;'>Desarrollado con Python & Streamlit</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #7B98B8; font-size: 0.95rem;'>Desarrollado con Python & Streamlit</p>", unsafe_allow_html=True)
