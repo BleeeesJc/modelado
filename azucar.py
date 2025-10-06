@@ -121,48 +121,170 @@ def editar_celda(event):
     entry_edit.bind("<FocusOut>", lambda e: entry_edit.destroy())
 
 
+# Configuración de la ventana
 ventana = tk.Tk()
 ventana.title("Simulación de Inventario de Azúcar")
-ventana.geometry("950x680")
-ventana.config(bg="#EAF0F6")
+ventana.geometry("1000x720")
+ventana.config(bg="#1E3A5F")
+ventana.resizable(False, False)
 
+# Título principal
 titulo = tk.Label(
     ventana,
-    text="SIMULACIÓN DE INVENTARIO - DISTRIBUCIÓN EXPONENCIAL",
-    font=("Segoe UI", 18, "bold"),
-    bg="#EAF0F6",
-    fg="#1E3A8A"
+    text="🧂 SIMULACIÓN DE EVENTOS DISCRETOS",
+    font=("Segoe UI", 20, "bold"),
+    bg="#1E3A5F",
+    fg="#FFFFFF"
 )
-titulo.pack(pady=10)
+titulo.pack(pady=15)
 
+# Línea decorativa
+linea = tk.Frame(ventana, height=3, bg="#4A90E2", width=450)
+linea.pack()
+
+# Subtítulo
+subtitulo = tk.Label(
+    ventana,
+    text="Inventario de Azúcar - Distribución Exponencial",
+    font=("Segoe UI", 12),
+    bg="#1E3A5F",
+    fg="#A8C5E2"
+)
+subtitulo.pack(pady=(5, 15))
+
+# Frame de parámetros
 frame_param = tk.LabelFrame(
-    ventana, text="Parámetros de Simulación", bg="#EAF0F6",
-    font=("Segoe UI", 11, "bold"), fg="#1E3A8A"
+    ventana, 
+    text="  Parámetros de Simulación  ", 
+    bg="#2A4A6F",
+    font=("Segoe UI", 11, "bold"), 
+    fg="#FFFFFF",
+    bd=0,
+    relief="flat"
 )
 frame_param.pack(pady=10, padx=20, fill="x")
 
-tk.Label(frame_param, text="Número de días a simular:", bg="#EAF0F6", font=("Segoe UI", 10)).grid(
-    row=0, column=0, padx=10, pady=5, sticky="e"
-)
-entry_dias = tk.Entry(frame_param, width=10)
-entry_dias.grid(row=0, column=1, padx=5, pady=5)
+# Contenedor interno
+contenedor_param = tk.Frame(frame_param, bg="#2A4A6F")
+contenedor_param.pack(pady=15)
+
+tk.Label(
+    contenedor_param, 
+    text="Número de días a simular:", 
+    bg="#2A4A6F", 
+    fg="#D4E3F0",
+    font=("Segoe UI", 10)
+).grid(row=0, column=0, padx=10, pady=5, sticky="e")
+
+entry_dias = tk.Entry(contenedor_param, width=12, font=("Segoe UI", 10), justify="center")
+entry_dias.grid(row=0, column=1, padx=10, pady=5)
 entry_dias.insert(0, "60")
 
-tk.Button(frame_param, text="SIMULAR", bg="#2563EB", fg="white", width=14, height=1,
-          font=("Segoe UI", 10, "bold"), command=simular).grid(row=0, column=2, padx=15)
-tk.Button(frame_param, text="LIMPIAR", bg="#DC2626", fg="white", width=14, height=1,
-          font=("Segoe UI", 10, "bold"), command=limpiar).grid(row=0, column=3, padx=15)
-tk.Button(frame_param, text="SALIR", bg="#6B7280", fg="white", width=14, height=1,
-          font=("Segoe UI", 10, "bold"), command=ventana.destroy).grid(row=0, column=4, padx=15)
+# Frame de botones
+frame_botones = tk.Frame(ventana, bg="#1E3A5F")
+frame_botones.pack(pady=15)
 
-frame_info = tk.LabelFrame(ventana, text="Parámetros del Sistema", bg="#EAF0F6",
-                           font=("Segoe UI", 11, "bold"), fg="#1E3A8A")
+# Funciones para efectos hover
+def on_button_enter(e):
+    e.widget['background'] = e.widget.hover_color
+
+def on_button_leave(e):
+    e.widget['background'] = e.widget.original_color
+
+# Botón SIMULAR
+btn_simular = tk.Button(
+    frame_botones, 
+    text="▶  SIMULAR", 
+    bg="#4A90E2", 
+    fg="white", 
+    width=16, 
+    height=2, 
+    font=("Segoe UI", 11, "bold"),
+    relief="flat",
+    cursor="hand2",
+    command=simular
+)
+btn_simular.original_color = "#4A90E2"
+btn_simular.hover_color = "#357ABD"
+btn_simular.grid(row=0, column=0, padx=10)
+btn_simular.bind("<Enter>", on_button_enter)
+btn_simular.bind("<Leave>", on_button_leave)
+
+# Botón LIMPIAR
+btn_limpiar = tk.Button(
+    frame_botones, 
+    text="🔄  LIMPIAR", 
+    bg="#6C757D", 
+    fg="white", 
+    width=16, 
+    height=2, 
+    font=("Segoe UI", 11, "bold"),
+    relief="flat",
+    cursor="hand2",
+    command=limpiar
+)
+btn_limpiar.original_color = "#6C757D"
+btn_limpiar.hover_color = "#5A6268"
+btn_limpiar.grid(row=0, column=1, padx=10)
+btn_limpiar.bind("<Enter>", on_button_enter)
+btn_limpiar.bind("<Leave>", on_button_leave)
+
+# Botón SALIR
+btn_salir = tk.Button(
+    frame_botones, 
+    text="✖  SALIR", 
+    bg="#DC3545", 
+    fg="white", 
+    width=16, 
+    height=2, 
+    font=("Segoe UI", 11, "bold"),
+    relief="flat",
+    cursor="hand2",
+    command=ventana.destroy
+)
+btn_salir.original_color = "#DC3545"
+btn_salir.hover_color = "#C82333"
+btn_salir.grid(row=0, column=2, padx=10)
+btn_salir.bind("<Enter>", on_button_enter)
+btn_salir.bind("<Leave>", on_button_leave)
+
+# Frame de información del sistema
+frame_info = tk.LabelFrame(
+    ventana, 
+    text="  Parámetros del Sistema  ", 
+    bg="#2A4A6F",
+    font=("Segoe UI", 11, "bold"), 
+    fg="#FFFFFF",
+    bd=0,
+    relief="flat"
+)
 frame_info.pack(padx=20, pady=10, fill="x")
 
-tabla_info = ttk.Treeview(frame_info, columns=("Concepto", "Valor"), show="headings", height=6)
+# Estilo para Treeview
+style = ttk.Style()
+style.theme_use("clam")
+style.configure("Custom.Treeview", 
+                background="#F5F7FA",
+                foreground="#2C3E50",
+                fieldbackground="#F5F7FA",
+                rowheight=25)
+style.configure("Custom.Treeview.Heading",
+                background="#4A90E2",
+                foreground="white",
+                font=("Segoe UI", 10, "bold"))
+style.map("Custom.Treeview", background=[("selected", "#4A90E2")])
+
+# Tabla de información
+tabla_info = ttk.Treeview(
+    frame_info, 
+    columns=("Concepto", "Valor"), 
+    show="headings", 
+    height=6,
+    style="Custom.Treeview"
+)
 tabla_info.heading("Concepto", text="Concepto")
 tabla_info.heading("Valor", text="Valor")
-tabla_info.column("Concepto", width=320, anchor="center")
+tabla_info.column("Concepto", width=450, anchor="center")
 tabla_info.column("Valor", width=150, anchor="center")
 
 valores_iniciales = [
@@ -176,28 +298,44 @@ valores_iniciales = [
 for val in valores_iniciales:
     tabla_info.insert("", "end", values=val)
 
-tabla_info.pack(padx=15, pady=5)
+tabla_info.pack(padx=15, pady=10)
 tabla_info.bind("<Double-1>", editar_celda)
 
-frame_tabla = tk.LabelFrame(ventana, text="Resultados Diarios", bg="#EAF0F6",
-                             font=("Segoe UI", 11, "bold"), fg="#1E3A8A")
+# Frame de resultados
+frame_tabla = tk.LabelFrame(
+    ventana, 
+    text="  Resultados Diarios  ", 
+    bg="#2A4A6F",
+    font=("Segoe UI", 11, "bold"), 
+    fg="#FFFFFF",
+    bd=0,
+    relief="flat"
+)
 frame_tabla.pack(padx=20, pady=10, fill="both", expand=True)
 
-columnas = ("Día", "Demanda", "Ventas", "Faltante", "Inventario", "Pedido", "Costo Acum (Bs)")
-tabla_resultados = ttk.Treeview(frame_tabla, columns=columnas, show="headings", height=10)
+# Tabla de resultados
+columnas = ("Día", "Demanda", "Ventas", "Faltante", "Inventario", "Pedido", "Costo Acum")
+tabla_resultados = ttk.Treeview(
+    frame_tabla, 
+    columns=columnas, 
+    show="headings", 
+    height=8,
+    style="Custom.Treeview"
+)
 for col in columnas:
     tabla_resultados.heading(col, text=col)
-    tabla_resultados.column(col, width=120, anchor="center")
-tabla_resultados.pack(fill="both", expand=True, pady=5)
+    tabla_resultados.column(col, width=130, anchor="center")
+tabla_resultados.pack(fill="both", expand=True, pady=10, padx=10)
 
+# Label de resultados
 lbl_resultados = tk.Label(
     ventana,
     text="Resultados aparecerán aquí.",
-    bg="#EAF0F6",
+    bg="#1E3A5F",
     justify="left",
-    font=("Segoe UI", 10, "bold"),
-    fg="#1E3A8A",
+    font=("Segoe UI", 10),
+    fg="#D4E3F0"
 )
-lbl_resultados.pack(pady=15)
+lbl_resultados.pack(pady=10)
 
 ventana.mainloop()

@@ -124,62 +124,90 @@ def editar_celda(event, tabla):
 
 ventana = tk.Tk()
 ventana.title("Simulación de Gallina Ponedora de Huevos")
-ventana.geometry("870x680")
-ventana.config(bg="#EAF0F6")
+ventana.geometry("900x720")
+ventana.config(bg="#1E3A5F")
+ventana.resizable(False, False)
 
 titulo = tk.Label(
     ventana,
-    text="SIMULACIÓN DE EVENTOS DISCRETOS",
-    font=("Segoe UI", 18, "bold"),
-    bg="#EAF0F6",
-    fg="#1E3A8A",
+    text="🥚 SIMULACIÓN DE EVENTOS DISCRETOS",
+    font=("Segoe UI", 20, "bold"),
+    bg="#1E3A5F",
+    fg="#FFFFFF",
 )
-titulo.pack(pady=10)
+titulo.pack(pady=15)
+
+linea = tk.Frame(ventana, height=3, bg="#4A90E2", width=400)
+linea.pack()
+
+subtitulo = tk.Label(
+    ventana,
+    text="Gallina Ponedora de Huevos",
+    font=("Segoe UI", 12),
+    bg="#1E3A5F",
+    fg="#A8C5E2",
+)
+subtitulo.pack(pady=(5, 15))
 
 frame_param = tk.LabelFrame(
-    ventana, text="Parámetros de la Simulación", bg="#EAF0F6", font=("Segoe UI", 11, "bold"), fg="#1E3A8A"
+    ventana, 
+    text="  Parámetros de la Simulación  ", 
+    bg="#2A4A6F", 
+    font=("Segoe UI", 11, "bold"), 
+    fg="#FFFFFF",
+    bd=0,
+    relief="flat"
 )
 frame_param.pack(pady=10, padx=20, fill="x")
 
-tk.Label(frame_param, text="Número de Simulaciones:", bg="#EAF0F6", font=("Segoe UI", 10)).grid(
-    row=0, column=0, padx=5, pady=5, sticky="e"
+campos = [
+    ("Número de Simulaciones:", entry_sims := tk.Entry(frame_param, width=12, font=("Segoe UI", 10), justify="center"), "5"),
+    ("Número de Días:", entry_dias := tk.Entry(frame_param, width=12, font=("Segoe UI", 10), justify="center"), "300"),
+    ("Precio Venta Huevo ($):", entry_phuevo := tk.Entry(frame_param, width=12, font=("Segoe UI", 10), justify="center"), "2"),
+    ("Precio Venta Pollo ($):", entry_ppollo := tk.Entry(frame_param, width=12, font=("Segoe UI", 10), justify="center"), "30"),
+    ("Media (λ) huevos/día:", entry_media := tk.Entry(frame_param, width=12, font=("Segoe UI", 10), justify="center"), "2"),
+]
+for i, (label_text, entry, default_val) in enumerate(campos):
+    row = i // 2
+    col = (i % 2) * 2
+    
+    tk.Label(
+        frame_param, 
+        text=label_text, 
+        bg="#2A4A6F", 
+        fg="#D4E3F0",
+        font=("Segoe UI", 10)
+    ).grid(row=row, column=col, padx=10, pady=8, sticky="e")
+    
+    entry.grid(row=row, column=col+1, padx=10, pady=8, sticky="w")
+    entry.insert(0, default_val)
+frame_prob = tk.LabelFrame(
+    ventana, 
+    text="  Probabilidades del Sistema  ", 
+    bg="#2A4A6F", 
+    font=("Segoe UI", 11, "bold"), 
+    fg="#FFFFFF",
+    bd=0,
+    relief="flat"
 )
-entry_sims = tk.Entry(frame_param, width=10)
-entry_sims.grid(row=0, column=1)
-entry_sims.insert(0, "5")
+frame_prob.pack(pady=10, padx=20, fill="x")
+contenedor_tablas = tk.Frame(frame_prob, bg="#2A4A6F")
+contenedor_tablas.pack(pady=10, padx=10)
 
-tk.Label(frame_param, text="Número de Días:", bg="#EAF0F6", font=("Segoe UI", 10)).grid(
-    row=0, column=2, padx=5, pady=5, sticky="e"
-)
-entry_dias = tk.Entry(frame_param, width=10)
-entry_dias.grid(row=0, column=3)
-entry_dias.insert(0, "300")
+style = ttk.Style()
+style.theme_use("clam")
+style.configure("Custom.Treeview", 
+                background="#F5F7FA",
+                foreground="#2C3E50",
+                fieldbackground="#F5F7FA",
+                rowheight=25)
+style.configure("Custom.Treeview.Heading",
+                background="#4A90E2",
+                foreground="white",
+                font=("Segoe UI", 10, "bold"))
+style.map("Custom.Treeview", background=[("selected", "#4A90E2")])
 
-tk.Label(frame_param, text="Precio Venta Huevo ($):", bg="#EAF0F6", font=("Segoe UI", 10)).grid(
-    row=1, column=0, padx=5, pady=5, sticky="e"
-)
-entry_phuevo = tk.Entry(frame_param, width=10)
-entry_phuevo.grid(row=1, column=1)
-entry_phuevo.insert(0, "2")
-
-tk.Label(frame_param, text="Precio Venta Pollo ($):", bg="#EAF0F6", font=("Segoe UI", 10)).grid(
-    row=1, column=2, padx=5, pady=5, sticky="e"
-)
-entry_ppollo = tk.Entry(frame_param, width=10)
-entry_ppollo.grid(row=1, column=3)
-entry_ppollo.insert(0, "30")
-
-tk.Label(frame_param, text="Media (λ) huevos/día:", bg="#EAF0F6", font=("Segoe UI", 10)).grid(
-    row=2, column=0, padx=5, pady=5, sticky="e"
-)
-entry_media = tk.Entry(frame_param, width=10)
-entry_media.grid(row=2, column=1)
-entry_media.insert(0, "2")
-
-frame_prob = tk.LabelFrame(ventana, text="Probabilidades del Sistema", bg="#EAF0F6", font=("Segoe UI", 11, "bold"), fg="#1E3A8A")
-frame_prob.pack(pady=10)
-
-tabla1 = ttk.Treeview(frame_prob, columns=("Fin", "Prob"), show="headings", height=3)
+tabla1 = ttk.Treeview(contenedor_tablas, columns=("Fin", "Prob"), show="headings", height=3, style="Custom.Treeview")
 tabla1.heading("Fin", text="Finalidad del Huevo")
 tabla1.heading("Prob", text="Probabilidad")
 tabla1.column("Fin", width=200, anchor="center")
@@ -187,45 +215,112 @@ tabla1.column("Prob", width=100, anchor="center")
 tabla1.insert("", "end", values=("Roto", "0.2"))
 tabla1.insert("", "end", values=("Pollo", "0.3"))
 tabla1.insert("", "end", values=("Permanece Huevo", "0.5"))
-tabla1.grid(row=0, column=0, padx=15, pady=5)
+tabla1.grid(row=0, column=0, padx=10, pady=5)
 
-tabla2 = ttk.Treeview(frame_prob, columns=("Destino", "Prob"), show="headings", height=2)
+tabla2 = ttk.Treeview(contenedor_tablas, columns=("Destino", "Prob"), show="headings", height=2, style="Custom.Treeview")
 tabla2.heading("Destino", text="Destino del Pollo")
 tabla2.heading("Prob", text="Probabilidad")
 tabla2.column("Destino", width=200, anchor="center")
 tabla2.column("Prob", width=100, anchor="center")
 tabla2.insert("", "end", values=("Muere", "0.2"))
 tabla2.insert("", "end", values=("Sobrevive", "0.8"))
-tabla2.grid(row=0, column=1, padx=15, pady=5)
+tabla2.grid(row=0, column=1, padx=10, pady=5)
 
 tabla1.bind("<Double-1>", lambda e: editar_celda(e, tabla1))
 tabla2.bind("<Double-1>", lambda e: editar_celda(e, tabla2))
 
-frame_botones = tk.Frame(ventana, bg="#EAF0F6")
-frame_botones.pack(pady=10)
+frame_botones = tk.Frame(ventana, bg="#1E3A5F")
+frame_botones.pack(pady=15)
 
-tk.Button(frame_botones, text="SIMULAR", bg="#2563EB", fg="white", width=14, height=1, font=("Segoe UI", 10, "bold"), command=simular).grid(row=0, column=0, padx=15)
-tk.Button(frame_botones, text="LIMPIAR", bg="#DC2626", fg="white", width=14, height=1, font=("Segoe UI", 10, "bold"), command=limpiar).grid(row=0, column=1, padx=15)
-tk.Button(frame_botones, text="SALIR", bg="#6B7280", fg="white", width=14, height=1, font=("Segoe UI", 10, "bold"), command=ventana.destroy).grid(row=0, column=2, padx=15)
+def on_button_enter(e):
+    e.widget['background'] = e.widget.hover_color
 
-frame_tabla = tk.LabelFrame(ventana, text="Resultados de Simulaciones", bg="#EAF0F6", font=("Segoe UI", 11, "bold"), fg="#1E3A8A")
+def on_button_leave(e):
+    e.widget['background'] = e.widget.original_color
+
+btn_simular = tk.Button(
+    frame_botones, 
+    text="▶  SIMULAR", 
+    bg="#4A90E2", 
+    fg="white", 
+    width=16, 
+    height=2, 
+    font=("Segoe UI", 11, "bold"),
+    relief="flat",
+    cursor="hand2",
+    command=simular
+)
+btn_simular.original_color = "#4A90E2"
+btn_simular.hover_color = "#357ABD"
+btn_simular.grid(row=0, column=0, padx=10)
+btn_simular.bind("<Enter>", on_button_enter)
+btn_simular.bind("<Leave>", on_button_leave)
+
+btn_limpiar = tk.Button(
+    frame_botones, 
+    text="🔄  LIMPIAR", 
+    bg="#6C757D", 
+    fg="white", 
+    width=16, 
+    height=2, 
+    font=("Segoe UI", 11, "bold"),
+    relief="flat",
+    cursor="hand2",
+    command=limpiar
+)
+btn_limpiar.original_color = "#6C757D"
+btn_limpiar.hover_color = "#5A6268"
+btn_limpiar.grid(row=0, column=1, padx=10)
+btn_limpiar.bind("<Enter>", on_button_enter)
+btn_limpiar.bind("<Leave>", on_button_leave)
+
+btn_salir = tk.Button(
+    frame_botones, 
+    text="✖  SALIR", 
+    bg="#DC3545", 
+    fg="white", 
+    width=16, 
+    height=2, 
+    font=("Segoe UI", 11, "bold"),
+    relief="flat",
+    cursor="hand2",
+    command=ventana.destroy
+)
+btn_salir.original_color = "#DC3545"
+btn_salir.hover_color = "#C82333"
+btn_salir.grid(row=0, column=2, padx=10)
+btn_salir.bind("<Enter>", on_button_enter)
+btn_salir.bind("<Leave>", on_button_leave)
+
+
+frame_tabla = tk.LabelFrame(
+    ventana, 
+    text="  Resultados de Simulaciones  ", 
+    bg="#2A4A6F", 
+    font=("Segoe UI", 11, "bold"), 
+    fg="#FFFFFF",
+    bd=0,
+    relief="flat"
+)
 frame_tabla.pack(padx=20, pady=10, fill="both", expand=True)
 
+
 columnas = ("Sim", "Ingreso", "Huevos Rotos", "Huevos Vendidos", "Pollos Vivos")
-tabla_resultados = ttk.Treeview(frame_tabla, columns=columnas, show="headings", height=5)
+tabla_resultados = ttk.Treeview(frame_tabla, columns=columnas, show="headings", height=5, style="Custom.Treeview")
 for col in columnas:
     tabla_resultados.heading(col, text=col)
     tabla_resultados.column(col, width=150, anchor="center")
-tabla_resultados.pack(fill="both", expand=True, pady=5)
+tabla_resultados.pack(fill="both", expand=True, pady=10, padx=10)
+
 
 lbl_resultados = tk.Label(
     ventana,
     text="Resultados de la simulación aparecerán aquí.",
-    bg="#EAF0F6",
+    bg="#1E3A5F",
     justify="left",
-    font=("Segoe UI", 10, "bold"),
-    fg="#1E3A8A",
+    font=("Segoe UI", 10),
+    fg="#D4E3F0",
 )
-lbl_resultados.pack(pady=15)
+lbl_resultados.pack(pady=10)
 
 ventana.mainloop()
