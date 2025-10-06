@@ -228,7 +228,7 @@ if simulacion == "🎲 Dados":
                 "Ganancia Casa": f"{ganancia_neta:.2f}"
             })
         
-        st.markdown("<h3>📊 Resultados</h3>", unsafe_allow_html=True)
+        st.markdown("<h3> Resultados</h3>", unsafe_allow_html=True)
         st.dataframe(resultados, use_container_width=True, height=400)
         
         porcentaje_casa = (gana_casa / n_juegos) * 100
@@ -306,7 +306,7 @@ elif simulacion == "🛒 Tienda":
                         "Artículos Vendidos": articulos_hora
                     })
             
-            st.markdown("<h3>📊 Resultados</h3>", unsafe_allow_html=True)
+            st.markdown("<h3> Resultados</h3>", unsafe_allow_html=True)
             st.dataframe(resultados, use_container_width=True, height=400)
             
             prom_clientes = total_clientes / sims
@@ -404,7 +404,7 @@ elif simulacion == "🥚 Huevos":
             total_pollos += pollos_vivos
             total_rotos += huevos_rotos
         
-        st.markdown("<h3>📊 Resultados</h3>", unsafe_allow_html=True)
+        st.markdown("<h3> Resultados</h3>", unsafe_allow_html=True)
         st.dataframe(resultados, use_container_width=True, height=300)
         
         ingreso_prom = total_ingreso / n_sim
@@ -503,7 +503,7 @@ elif simulacion == "🧂 Azúcar":
                 "Costo Acum": round(costo_total, 2)
             })
         
-        st.markdown("<h3>📊 Resultados</h3>", unsafe_allow_html=True)
+        st.markdown("<h3> Resultados</h3>", unsafe_allow_html=True)
         st.dataframe(resultados, use_container_width=True, height=400)
         
         ganancia_neta = ingresos - costo_total
