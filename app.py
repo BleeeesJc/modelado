@@ -4,7 +4,7 @@ import math
 
 st.set_page_config(
     page_title="Simulación de Eventos Discretos",
-    page_icon="🎲",
+    page_icon="",
     layout="wide"
 )
 
@@ -93,7 +93,7 @@ if simulacion == "🎲 Dados":
                 "Ganancia Casa": f"{ganancia_neta:.2f}"
             })
         
-        st.markdown("### 📊 Resultados")
+        st.markdown("###  Resultados")
         st.dataframe(resultados, use_container_width=True)
         
         porcentaje_casa = (gana_casa / n_juegos) * 100
@@ -103,7 +103,7 @@ if simulacion == "🎲 Dados":
         col2.metric("Juegos ganados por Casa", gana_casa)
         col3.metric("Juegos ganados por Jugador", gana_jugador)
         
-        st.info(f"📈 Porcentaje de juegos ganados por la casa: {porcentaje_casa:.2f}%")
+        st.info(f" Porcentaje de juegos ganados por la casa: {porcentaje_casa:.2f}%")
 
 elif simulacion == "🛒 Tienda":
     st.markdown("### 🛒 Simulación de Llegadas de Clientes")
@@ -162,7 +162,7 @@ elif simulacion == "🛒 Tienda":
                         "Artículos Vendidos": articulos_hora
                     })
             
-            st.markdown("### 📊 Resultados")
+            st.markdown("###  Resultados")
             st.dataframe(resultados, use_container_width=True, height=300)
             
             prom_clientes = total_clientes / sims
@@ -251,7 +251,7 @@ elif simulacion == "🥚 Huevos":
             total_pollos += pollos_vivos
             total_rotos += huevos_rotos
         
-        st.markdown("### 📊 Resultados")
+        st.markdown("###  Resultados")
         st.dataframe(resultados, use_container_width=True)
         
         ingreso_prom = total_ingreso / n_sim
@@ -344,7 +344,7 @@ elif simulacion == "🧂 Azúcar":
                 "Costo Acum": round(costo_total, 2)
             })
         
-        st.markdown("### 📊 Resultados")
+        st.markdown("###  Resultados")
         st.dataframe(resultados, use_container_width=True, height=300)
         
         ganancia_neta = ingresos - costo_total
