@@ -194,7 +194,7 @@ if simulacion == "🎲 Dados":
     with col_btn1:
         btn_simular_dados = st.button("▶ SIMULAR", key="btn_dados", use_container_width=True)
     with col_btn2:
-        btn_limpiar_dados = st.button("🔄 LIMPIAR", key="btn_limpiar_dados", use_container_width=True)
+        btn_limpiar_dados = st.button(" LIMPIAR", key="btn_limpiar_dados", use_container_width=True)
     
     if btn_limpiar_dados:
         st.rerun()
@@ -268,7 +268,7 @@ elif simulacion == "🛒 Tienda":
     with col_btn1:
         btn_simular_tienda = st.button("▶ SIMULAR", key="btn_tienda", use_container_width=True)
     with col_btn2:
-        btn_limpiar_tienda = st.button("🔄 LIMPIAR", key="btn_limpiar_tienda", use_container_width=True)
+        btn_limpiar_tienda = st.button(" LIMPIAR", key="btn_limpiar_tienda", use_container_width=True)
     
     if btn_limpiar_tienda:
         st.rerun()
@@ -351,7 +351,7 @@ elif simulacion == "🥚 Huevos":
     with col_btn1:
         btn_simular_huevos = st.button("▶ SIMULAR", key="btn_huevos", use_container_width=True)
     with col_btn2:
-        btn_limpiar_huevos = st.button("🔄 LIMPIAR", key="btn_limpiar_huevos", use_container_width=True)
+        btn_limpiar_huevos = st.button(" LIMPIAR", key="btn_limpiar_huevos", use_container_width=True)
     
     if btn_limpiar_huevos:
         st.rerun()
@@ -447,7 +447,7 @@ elif simulacion == "🧂 Azúcar":
     with col_btn1:
         btn_simular_azucar = st.button("▶ SIMULAR", key="btn_azucar", use_container_width=True)
     with col_btn2:
-        btn_limpiar_azucar = st.button("🔄 LIMPIAR", key="btn_limpiar_azucar", use_container_width=True)
+        btn_limpiar_azucar = st.button(" LIMPIAR", key="btn_limpiar_azucar", use_container_width=True)
     
     if btn_limpiar_azucar:
         st.rerun()
