@@ -29,7 +29,6 @@ def on_leave(e):
     e.widget['background'] = "#F5F7FA"  
     e.widget['foreground'] = "#2C3E50"
     e.widget['relief'] = "flat"
-
 ventana = tk.Tk()
 ventana.title("Simulación de Eventos Discretos")
 ventana.geometry("500x550")
@@ -38,7 +37,6 @@ ventana.resizable(False, False)
 
 frame_principal = tk.Frame(ventana, bg="#1E3A5F")
 frame_principal.pack(expand=True, fill=tk.BOTH, padx=30, pady=30)
-
 titulo = tk.Label(
     frame_principal,
     text="SIMULACIÓN DE\nEVENTOS DISCRETOS",
@@ -48,10 +46,8 @@ titulo = tk.Label(
     justify=tk.CENTER
 )
 titulo.pack(pady=(20, 10))
-
 linea = tk.Frame(frame_principal, height=3, bg="#4A90E2", width=250)
 linea.pack(pady=10)
-
 subtitulo = tk.Label(
     frame_principal,
     text="Selecciona una simulación para comenzar",
