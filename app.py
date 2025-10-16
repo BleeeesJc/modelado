@@ -279,14 +279,14 @@ st.markdown("<div class='subtitle-box'><h4 style='color: #bae6fd; margin: 0; fon
 
 simulacion = st.selectbox(
     "Elige una simulación:",
-    ["-- Seleccionar --", "🎲 Dados", "🛒 Tienda", "🥚 Huevos", "🧂 Azúcar", "💰 Interés Simple", "📈 Interés Variable"],
+    ["-- Seleccionar --", "Dados", "Tienda", "Huevos", "Azúcar", "Interés Simple", "Interés Variable"],
     disabled=False,
     label_visibility="visible"
 )
 st.markdown("<br>", unsafe_allow_html=True)
 
-if simulacion == "💰 Interés Simple":
-    st.markdown("<h3>💰 Simulación de Interés Compuesto (Tasa Fija)</h3>", unsafe_allow_html=True)
+if simulacion == "Interés Simple":
+    st.markdown("<h3>Simulación de Interés Compuesto (Tasa Fija)</h3>", unsafe_allow_html=True)
     st.markdown("<hr>", unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
@@ -324,8 +324,8 @@ if simulacion == "💰 Interés Simple":
         st.dataframe(resultados, use_container_width=True, height=400)
         st.success(f"Capital final después de {periodos} periodos: **{k:.2f} Bs**")
 
-elif simulacion == "📈 Interés Variable":
-    st.markdown("<h3>📈 Simulación de Interés Compuesto (Tasa Variable por Monto)</h3>", unsafe_allow_html=True)
+elif simulacion == "Interés Variable":
+    st.markdown("<h3>Simulación de Interés Compuesto (Tasa Variable por Monto)</h3>", unsafe_allow_html=True)
     st.markdown("<hr>", unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
@@ -368,8 +368,8 @@ elif simulacion == "📈 Interés Variable":
         st.dataframe(resultados, use_container_width=True, height=400)
         st.success(f"Capital final después de {periodos} periodos: **{k:.2f} Bs**")
 
-elif simulacion == "🎲 Dados":
-    st.markdown("<h3>🎲 Simulación de Juego de Dados</h3>", unsafe_allow_html=True)
+elif simulacion == "Dados":
+    st.markdown("<h3>Simulación de Juego de Dados</h3>", unsafe_allow_html=True)
     st.markdown("<hr>", unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
@@ -432,8 +432,8 @@ elif simulacion == "🎲 Dados":
         
         st.info(f"Porcentaje de juegos ganados por la casa: {porcentaje_casa:.2f}%")
 
-elif simulacion == "🛒 Tienda":
-    st.markdown("<h3>🛒 Simulación de Llegadas de Clientes</h3>", unsafe_allow_html=True)
+elif simulacion == "Tienda":
+    st.markdown("<h3>Simulación de Llegadas de Clientes</h3>", unsafe_allow_html=True)
     st.markdown("<hr>", unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
@@ -469,7 +469,7 @@ elif simulacion == "🛒 Tienda":
         probs = [prob_0, prob_1, prob_2, prob_3]
         
         if abs(sum(probs) - 1.0) > 0.001:
-            st.error("❌ Las probabilidades deben sumar 1.0")
+            st.error("Las probabilidades deben sumar 1.0")
         else:
             total_clientes = 0
             total_articulos = 0
@@ -508,8 +508,8 @@ elif simulacion == "🛒 Tienda":
             col1.metric("Promedio Clientes Totales", f"{prom_clientes:.2f}")
             col2.metric("Promedio Artículos Vendidos", f"{prom_articulos:.2f}")
 
-elif simulacion == "🥚 Huevos":
-    st.markdown("<h3>🥚 Simulación de Gallina Ponedora</h3>", unsafe_allow_html=True)
+elif simulacion == "Huevos":
+    st.markdown("<h3>Simulación de Gallina Ponedora</h3>", unsafe_allow_html=True)
     st.markdown("<hr>", unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
@@ -614,8 +614,8 @@ elif simulacion == "🥚 Huevos":
         col4.metric("Promedio Pollos Vivos", f"{prom_pollos:.2f}")
         col5.metric("Promedio Huevos Vendidos", f"{prom_huevos:.2f}")
 
-elif simulacion == "🧂 Azúcar":
-    st.markdown("<h3>🧂 Simulación de Inventario de Azúcar</h3>", unsafe_allow_html=True)
+elif simulacion == "Azúcar":
+    st.markdown("<h3>Simulación de Inventario de Azúcar</h3>", unsafe_allow_html=True)
     st.markdown("<hr>", unsafe_allow_html=True)
     
     dias_sim = st.number_input("Número de días a simular:", min_value=1, value=60, step=1, key="ds_azucar")
